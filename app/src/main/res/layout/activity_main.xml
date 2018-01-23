@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="maxtauro.alarming.MainActivity">
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:id="@+id/alarm_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/timePicker"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:text="Turnoff Alarm" />
+
+    <Button
+        android:id="@+id/alarm_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/timePicker"
+        android:layout_marginEnd="43dp"
+        android:layout_marginRight="43dp"
+        android:text="Set Alarm" />
+
+    <TextView
+        android:id="@+id/alarmStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_cancel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="" />
+
+
+</RelativeLayout>
