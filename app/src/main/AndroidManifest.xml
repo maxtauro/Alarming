@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".AlarmListPage"/>
         <receiver android:name=".AlarmReceiver" />
 
         <service android:name=".RingtonePlayingService"

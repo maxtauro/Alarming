@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -59,31 +60,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Log.e("Clicking set alarm","");
                 // get the values of the hour and minute;
                 int hour = alarmTimepicker.getHour();
                 int minute = alarmTimepicker.getMinute();
 
                 calendar.set(Calendar.HOUR_OF_DAY, alarmTimepicker.getHour());
                 calendar.set(Calendar.MINUTE, alarmTimepicker.getMinute());
-
-                // convert the int values to strings
-                String hourString = String.valueOf(hour);
-                String minuteString = String.valueOf(minute);
-
-                if (hour > 12) hourString = String.valueOf(hour - 12);
-                if (minute < 10) minuteString = "0" + String.valueOf(minute);
-
-                setAlarmText(hourString + ":" + minuteString);
-
-                // create a pending intent that delays the intent
-                // until the specified calendar time
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
-                        0,
-                        receiverIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-                // set the alarm manager
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                AlarmObject alarm = new AlarmObject(hour,minute,context,alarmManager,false);
+                alarm.setAlarm();
             }
 
             ;
@@ -94,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setAlarmText("Alarm off");
                 alarmManager.cancel(pendingIntent);
+
+                // tells the clock that the alarm should be off
+                receiverIntent.putExtra("extra",false);
+
+                //stop the ringtone
+                sendBroadcast(receiverIntent);
             }
 
             ;

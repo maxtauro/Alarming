@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class RingtonePlayingService extends Service {
 
     MediaPlayer mediaSong;
+    int startId;
 
     @Nullable
     @Override
@@ -26,9 +27,23 @@ public class RingtonePlayingService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("LocalService", "Received start id " + startId + ": " + intent);
 
-        // play the ringtone
+        //state of the alarm
+        boolean alarmState = intent.getExtras().getBoolean("alarmState");
+
+        Log.e("should the alarm start?", String.valueOf(alarmState));
+
         mediaSong = MediaPlayer.create(this, R.raw.railroad_bell);
         mediaSong.start();
+
+        /*if (alarmState) {
+            Log.e("starting alarm","");
+            mediaSong.start();
+        }
+        else if (!alarmState) {
+            Log.e("stoping alarm","");
+            mediaSong.stop();
+            mediaSong.reset();
+        }*/
         return START_NOT_STICKY;
     }
 
