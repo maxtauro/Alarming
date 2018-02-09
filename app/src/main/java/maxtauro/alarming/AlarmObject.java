@@ -25,8 +25,6 @@ public class AlarmObject extends AlarmListPage {
     PendingIntent pendingIntent;
     Context context;
 
-
-
     public AlarmObject(int hr, int min, AlarmManager alarmManager) {
         this.hour = hr;
         this.minute = min;
@@ -44,9 +42,6 @@ public class AlarmObject extends AlarmListPage {
     public void setAlarm(){
 
         this.context = this;
-
-        // initialize alarm manager
-        //alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         // create an intent to the alarm receiver class
         final Intent receiverIntent = new Intent(this.context, AlarmReceiver.class);
@@ -87,8 +82,11 @@ public class AlarmObject extends AlarmListPage {
             //stop the ringtone
             sendBroadcast(receiverIntent);
         }
+    }
 
-
+    public void cancelAlarm(){
+        isSet = false;
+        alarmManager.cancel(pendingIntent);
     }
 
     public String toString(){
@@ -101,7 +99,4 @@ public class AlarmObject extends AlarmListPage {
 
         return text;
     }
-
-
-
 }

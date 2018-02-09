@@ -21,14 +21,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class AlarmListPage extends AppCompatActivity {
     ListView listView;
     AlarmManager alarmManager;
-    List<String> alarmList = new ArrayList<String>();
     List<AlarmObject> alarmsList = new ArrayList<AlarmObject>();
     ArrayAdapter<AlarmObject> adapter;
     Context context;
+    boolean isEditing = false;
+    int editPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,6 @@ public class AlarmListPage extends AppCompatActivity {
 
         alarmsList = new ArrayList<AlarmObject>();
 
-        alarmList = new ArrayList<String>();
-
         adapter = new ArrayAdapter<AlarmObject>(this, android.R.layout.simple_list_item_1, android.R.id.text1,alarmsList);
 
         //assign adapter to listView
@@ -54,9 +52,11 @@ public class AlarmListPage extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?>parent, View view, int position, long id){
-
-            //to edit the alarm
-
+            Log.e("edting alarm", String.valueOf(System.currentTimeMillis()));
+            editPos = position;
+            isEditing = true;
+            DialogFragment newFragment = new TimePickerFragment();
+            newFragment.show(getFragmentManager(), "TimePicker");
         }
         });
 
@@ -67,7 +67,6 @@ public class AlarmListPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("CLicking button", String.valueOf(System.currentTimeMillis()));
-                //alarmList.add(String.valueOf(System.currentTimeMillis()));
                 adapter.notifyDataSetChanged();
 
                 DialogFragment newFragment = new TimePickerFragment();
@@ -76,12 +75,15 @@ public class AlarmListPage extends AppCompatActivity {
         });
     }
 
-
     public void addAlarmToList(int hour, int min) {
         Log.e("got to addToList, ", "");
+        if(isEditing){
+            alarmsList.get(editPos).cancelAlarm();
+            alarmsList.remove(editPos);
+            isEditing = false;
+        }
         AlarmObject alarm = new AlarmObject(hour,min,alarmManager);
         alarmsList.add(alarm);
-        //alarmList.add(alarm.alarmText());
         adapter.notifyDataSetChanged();
     }
 }
