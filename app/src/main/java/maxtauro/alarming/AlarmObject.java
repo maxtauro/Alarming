@@ -21,6 +21,7 @@ public class AlarmObject extends AlarmListPage {
     int minute;
     boolean isSet = false; //isSet means the alarm is set and should go off
                            //!isSet means the alarm is not set and should not go off
+    boolean isAM;
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
     Context context;
@@ -92,10 +93,16 @@ public class AlarmObject extends AlarmListPage {
     public String toString(){
         String sMinute = String.valueOf(minute);
         String sHour = String.valueOf(hour);
-        if (hour > 12) sHour = String.valueOf(hour - 12);
+        if (hour > 12){
+            sHour = String.valueOf(hour - 12);
+            isAM = false;
+        }
         if (minute < 10) sMinute = "0" + String.valueOf(minute);
 
         String text = sHour + ":" + sMinute;
+
+        if(isAM) text+= " am";
+        else text += " pm";
 
         return text;
     }
