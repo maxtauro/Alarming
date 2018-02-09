@@ -27,7 +27,7 @@ public class AlarmListPage extends AppCompatActivity {
     AlarmManager alarmManager;
     List<String> alarmList = new ArrayList<String>();
     List<AlarmObject> alarmsList = new ArrayList<AlarmObject>();
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<AlarmObject> adapter;
     Context context;
 
     @Override
@@ -41,9 +41,11 @@ public class AlarmListPage extends AppCompatActivity {
         //get listview object from xml,
         listView = (ListView) findViewById(R.id.list);
 
+        alarmsList = new ArrayList<AlarmObject>();
+
         alarmList = new ArrayList<String>();
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1,alarmList);
+        adapter = new ArrayAdapter<AlarmObject>(this, android.R.layout.simple_list_item_1, android.R.id.text1,alarmsList);
 
         //assign adapter to listView
         listView.setAdapter(adapter);
@@ -53,15 +55,8 @@ public class AlarmListPage extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?>parent, View view, int position, long id){
 
-            //List view clicked item index
-            int itemPosition = position;
+            //to edit the alarm
 
-            //List view clicked item value
-            String itemValue = (String) listView.getItemAtPosition(itemPosition);
-
-            //show alert
-            Toast.makeText(getApplicationContext(),"Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                    .show();
         }
         });
 
@@ -82,10 +77,11 @@ public class AlarmListPage extends AppCompatActivity {
     }
 
 
-    public void addAlarmToList(AlarmObject alarmObject) {
-        Log.e("got to addToList, ", alarmObject.alarmText());
-        alarmsList.add(alarmObject);
-        alarmList.add(alarmObject.alarmText());
+    public void addAlarmToList(int hour, int min) {
+        Log.e("got to addToList, ", "");
+        AlarmObject alarm = new AlarmObject(hour,min,alarmManager);
+        alarmsList.add(alarm);
+        //alarmList.add(alarm.alarmText());
         adapter.notifyDataSetChanged();
     }
 }

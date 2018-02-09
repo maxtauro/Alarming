@@ -91,7 +91,7 @@ public class AlarmObject extends AlarmListPage {
 
     }
 
-    public String alarmText(){
+    public String toString(){
         String sMinute = String.valueOf(minute);
         String sHour = String.valueOf(hour);
         if (hour > 12) sHour = String.valueOf(hour - 12);
