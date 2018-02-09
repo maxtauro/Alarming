@@ -15,36 +15,35 @@ import static android.content.Context.ALARM_SERVICE;
  * Created by maxtauro on 2018-01-30.
  */
 
-public class AlarmObject extends AppCompatActivity {
+public class AlarmObject extends AlarmListPage {
 
     int hour;
     int minute;
-    boolean isSet = false;
+    boolean isSet = false; //isSet means the alarm is set and should go off
+                           //!isSet means the alarm is not set and should not go off
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
     Context context;
 
 
 
-    public AlarmObject(int hr, int min, Context _context, AlarmManager _alarmManager) {
-
-        //super("AlarmObject");
+    public AlarmObject(int hr, int min, AlarmManager alarmManager) {
         this.hour = hr;
         this.minute = min;
-        this.context = _context;
-        this.alarmManager = _alarmManager;
+        this.alarmManager = alarmManager;
     }
-    public AlarmObject(int hr, int min, Context _context,AlarmManager _alarmManager, boolean bSet) {
 
-        //super("AlarmObject");
+    public AlarmObject(int hr, int min, AlarmManager alarmManager,  boolean bSet) {
+
         this.hour = hr;
         this.minute = min;
-        this.context = _context;
-        this.alarmManager = _alarmManager;
+        this.alarmManager = alarmManager;
         this.isSet = bSet;
     }
 
     public void setAlarm(){
+
+        this.context = this;
 
         // initialize alarm manager
         //alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -78,7 +77,7 @@ public class AlarmObject extends AppCompatActivity {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
 
-        else if(isSet){
+        else if(isSet){ //the alarm will be canceled
             isSet = false;
             alarmManager.cancel(pendingIntent);
 
@@ -90,10 +89,17 @@ public class AlarmObject extends AppCompatActivity {
         }
 
 
+    }
 
+    public String alarmText(){
+        String sMinute = String.valueOf(minute);
+        String sHour = String.valueOf(hour);
+        if (hour > 12) sHour = String.valueOf(hour - 12);
+        if (minute < 10) sMinute = "0" + String.valueOf(minute);
 
+        String text = sHour + ":" + sMinute;
 
-
+        return text;
     }
 
 
