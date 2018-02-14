@@ -40,9 +40,9 @@ public class AlarmObject extends AlarmListPage {
         this.isSet = bSet;
     }
 
-    public void setAlarm(){
+    public void setAlarm(Context context){
 
-        this.context = this;
+        this.context = context;
 
         // create an intent to the alarm receiver class
         final Intent receiverIntent = new Intent(this.context, AlarmReceiver.class);
@@ -56,11 +56,10 @@ public class AlarmObject extends AlarmListPage {
             calendar.set(Calendar.HOUR_OF_DAY, hour);
             calendar.set(Calendar.MINUTE, minute);
 
-            receiverIntent.putExtra("extra",isSet);
 
             //put an extra string into receiverIntent
             //tells the clock that the alarm is on
-            receiverIntent.putExtra("extra",isSet);
+            receiverIntent.putExtra("stopAlarm",false);
 
             // create a pending intent that delays the intent
             // until the specified calendar time
@@ -78,7 +77,7 @@ public class AlarmObject extends AlarmListPage {
             alarmManager.cancel(pendingIntent);
 
             // tells the clock that the alarm should be off
-            receiverIntent.putExtra("extra",false);
+            receiverIntent.putExtra("stopAlarm",true);
 
             //stop the ringtone
             sendBroadcast(receiverIntent);
@@ -89,6 +88,8 @@ public class AlarmObject extends AlarmListPage {
         isSet = false;
         alarmManager.cancel(pendingIntent);
     }
+
+
 
     public String toString(){
         String sMinute = String.valueOf(minute);

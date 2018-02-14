@@ -15,10 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AlarmListPage extends AppCompatActivity {
@@ -83,6 +81,7 @@ public class AlarmListPage extends AppCompatActivity {
             isEditing = false;
         }
         AlarmObject alarm = new AlarmObject(hour,min,alarmManager);
+        alarm.setAlarm(context);
         alarmsList.add(alarm);
         adapter.notifyDataSetChanged();
     }

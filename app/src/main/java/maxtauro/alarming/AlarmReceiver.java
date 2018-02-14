@@ -16,7 +16,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         Log.e("In the receiver class", "Yasss");
 
         // get alarmState from the intent
-        boolean alarmState = intent.getExtras().getBoolean("alarmState");
+        boolean alarmState = intent.getExtras().getBoolean("stopAlarm");
 
         Log.i("is the alarm on?", String.valueOf(alarmState));
 
@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         Intent service_intent = new Intent(context, RingtonePlayingService.class);
 
         // pass the extra string from main to ringtone playing service
-        service_intent.putExtra("extra", alarmState);
+        service_intent.putExtra("stopAlarm", alarmState);
 
         // start the ringtone
         context.startService(service_intent);

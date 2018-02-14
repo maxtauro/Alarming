@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class RingtonePlayingService extends Service {
 
-    MediaPlayer mediaSong;
+
     int startId;
 
     @Nullable
@@ -25,32 +25,28 @@ public class RingtonePlayingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         Log.i("LocalService", "Received start id " + startId + ": " + intent);
 
+
         //state of the alarm
-        boolean alarmState = intent.getExtras().getBoolean("alarmState");
+        boolean stopAlarm = intent.getExtras().getBoolean("stopAlarm");
 
-        Log.e("should the alarm start?", String.valueOf(alarmState));
-
-        mediaSong = MediaPlayer.create(this, R.raw.railroad_bell);
-        mediaSong.start();
-
-        /*if (alarmState) {
-            Log.e("starting alarm","");
-            mediaSong.start();
+        Log.e("should the alarm stop?", String.valueOf(stopAlarm));
+        if(!stopAlarm){ //start
+            Intent cancelAlarmIntent = new Intent(RingtonePlayingService.this, AlarmRingingActivity.class);
+            cancelAlarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            cancelAlarmIntent.putExtra("Intent", intent);
+            RingtonePlayingService.this.startActivity(cancelAlarmIntent);
         }
-        else if (!alarmState) {
-            Log.e("stoping alarm","");
-            mediaSong.stop();
-            mediaSong.reset();
-        }*/
+
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy(){
-
         // Tell the user we stopped
         Toast.makeText(this, "On destroy", Toast.LENGTH_SHORT).show();
     }
+
 }
