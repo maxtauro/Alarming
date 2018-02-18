@@ -1,5 +1,5 @@
 # Alarming
-Simple Android Alarm Clock app that uses RSA encryption to dismiss Alarm
+Simple Android Alarm Clock app that uses RSA encryption to dismiss alarm
 
 When an alarm is triggered, the user is given a public key in the form (e,n) and must solve for the private ke (d,n) to dismiss the alarm.  
 
