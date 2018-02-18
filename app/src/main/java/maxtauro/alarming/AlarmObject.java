@@ -1,5 +1,6 @@
 package maxtauro.alarming;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -56,10 +57,10 @@ public class AlarmObject extends AlarmListPage {
             calendar.set(Calendar.HOUR_OF_DAY, hour);
             calendar.set(Calendar.MINUTE, minute);
 
-
             //put an extra string into receiverIntent
             //tells the clock that the alarm is on
             receiverIntent.putExtra("stopAlarm",false);
+            receiverIntent.putExtra("Alarm", this.toString());
 
             // create a pending intent that delays the intent
             // until the specified calendar time
@@ -89,7 +90,9 @@ public class AlarmObject extends AlarmListPage {
         alarmManager.cancel(pendingIntent);
     }
 
-
+    public int timeAsInt(){
+        return (this.hour*100 + this.minute);
+    }
 
     public String toString(){
         String sMinute = String.valueOf(minute);

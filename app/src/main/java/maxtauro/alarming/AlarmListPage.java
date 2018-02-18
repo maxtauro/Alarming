@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AlarmListPage extends AppCompatActivity {
@@ -83,7 +85,17 @@ public class AlarmListPage extends AppCompatActivity {
         AlarmObject alarm = new AlarmObject(hour,min,alarmManager);
         alarm.setAlarm(context);
         alarmsList.add(alarm);
+        sortAlarms();
         adapter.notifyDataSetChanged();
+    }
+
+    public void sortAlarms(){
+        Collections.sort(alarmsList, new Comparator<AlarmObject>() {
+            @Override
+            public int compare(AlarmObject alarm1, AlarmObject alarm2) {
+                return alarm2.timeAsInt() - alarm1.timeAsInt();
+            }
+        });
     }
 }
 

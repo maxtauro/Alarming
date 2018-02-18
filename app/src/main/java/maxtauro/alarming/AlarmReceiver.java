@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.io.StringBufferInputStream;
+
 /**
  * Created by maxtauro on 2018-01-22.
  */
@@ -17,8 +19,10 @@ public class AlarmReceiver extends BroadcastReceiver{
 
         // get alarmState from the intent
         boolean alarmState = intent.getExtras().getBoolean("stopAlarm");
+        String alarmTime = intent.getExtras().getString("Alarm");
 
         Log.i("is the alarm on?", String.valueOf(alarmState));
+        Log.e("this alarm is: " , alarmTime);
 
         //create an intent to the ringtone service
         Intent service_intent = new Intent(context, RingtonePlayingService.class);
